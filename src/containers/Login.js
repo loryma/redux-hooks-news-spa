@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import * as actions from "../store/actions";
 
-const Login = () => {
+const Login = props => {
   // let [fields, setFields] = useState({
   //   email: {
   //     value: "",
@@ -31,6 +34,7 @@ const Login = () => {
 
   const onSubmit = e => {
     e.preventDefault();
+    props.authorize(email, password);
   };
 
   return (
@@ -48,10 +52,25 @@ const Login = () => {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={props.loading}>
+          Login
+        </button>
       </form>
+      {props.loggedIn && <Redirect to="/profile" />}
     </div>
   );
 };
 
-export default Login;
+const mapStateToProps = state => ({
+  loading: state.loading,
+  loggedIn: state.userId
+});
+
+const mapDispatchToProps = dispatch => ({
+  authorize: (email, password) => dispatch(actions.authorize(email, password))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login);
