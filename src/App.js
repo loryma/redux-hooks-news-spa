@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import { createStore, applyMiddleware, compose } from "redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
 import authReducer from "./store/reducers/authReducer";
+import profileReducer from "./store/reducers/profileReducer";
 import News from "./containers/News";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
@@ -15,8 +16,13 @@ import "./App.css";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+const rootReducer = combineReducers({
+  auth: authReducer,
+  profile: profileReducer
+});
+
 const store = createStore(
-  authReducer,
+  rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );
 

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as actions from "../store/actions";
 
+import { classes } from "./Login.module.css";
 const Login = props => {
   // let [fields, setFields] = useState({
   //   email: {
@@ -57,13 +58,17 @@ const Login = props => {
         </button>
       </form>
       {props.loggedIn && <Redirect to="/profile" />}
+      {props.error && props.error.errorMessage && (
+        <div className={classes.Error}>{props.error.errorMessage}</div>
+      )}
     </div>
   );
 };
 
 const mapStateToProps = state => ({
-  loading: state.loading,
-  loggedIn: state.userId
+  loading: state.auth.loading,
+  loggedIn: state.auth.userId,
+  error: state.auth.error
 });
 
 const mapDispatchToProps = dispatch => ({

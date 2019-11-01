@@ -5,13 +5,11 @@ export const authStart = () => ({ type: actionTypes.AUTHORIZATION_START });
 
 export const authSuccess = userId => ({
   type: actionTypes.AUTHORIZATION_SUCCESS,
-  payload: {
-    userId
-  }
+  userId
 });
 export const authFail = error => ({
   type: actionTypes.AUTHORIZATION_FAIL,
-  payload: { error }
+  error
 });
 
 export const authorize = (email, password) => {

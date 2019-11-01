@@ -6,14 +6,14 @@ const initialState = {
   error: null
 };
 
-const authReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
+const authReducer = (state = initialState, action) => {
+  switch (action.type) {
     case actionTypes.AUTHORIZATION_START:
       return { ...state, loading: true };
     case actionTypes.AUTHORIZATION_SUCCESS:
-      return { userId: payload.userId, loading: false, error: null };
+      return { userId: action.userId, loading: false, error: null };
     case actionTypes.AUTHORIZATION_FAIL:
-      return { ...state, error: payload.error };
+      return { ...state, error: action.error };
     default:
       return state;
   }
