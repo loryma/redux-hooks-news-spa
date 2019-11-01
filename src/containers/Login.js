@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as actions from "../store/actions";
 
-import { classes } from "./Login.module.css";
-const Login = props => {
+import classes from "./Login.module.css";
+const Login = ({ authorize, loggedIn, loading, error, clearPassword }) => {
   // let [fields, setFields] = useState({
   //   email: {
   //     value: "",
@@ -33,9 +33,15 @@ const Login = props => {
   //   let value = e.target.value;
   // };
 
+  useEffect(() => {
+    if (clearPassword) {
+      setPassword("");
+    }
+  }, [clearPassword]);
+
   const onSubmit = e => {
     e.preventDefault();
-    props.authorize(email, password);
+    authorize(email, password);
   };
 
   return (
@@ -53,13 +59,13 @@ const Login = props => {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <button type="submit" disabled={props.loading}>
+        <button type="submit" disabled={loading}>
           Login
         </button>
       </form>
-      {props.loggedIn && <Redirect to="/profile" />}
-      {props.error && props.error.errorMessage && (
-        <div className={classes.Error}>{props.error.errorMessage}</div>
+      {loggedIn && <Redirect to="/profile" />}
+      {error && error.message && (
+        <div className={classes.Error}>{error.message}</div>
       )}
     </div>
   );
@@ -68,7 +74,9 @@ const Login = props => {
 const mapStateToProps = state => ({
   loading: state.auth.loading,
   loggedIn: state.auth.userId,
-  error: state.auth.error
+  error: state.auth.error,
+  clearPassword:
+    state.auth.error && state.auth.error.message === "wrong_email_or_password"
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -13,7 +13,7 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.AUTHORIZATION_SUCCESS:
       return { ...state, userId: action.userId, loading: false, error: null };
     case actionTypes.AUTHORIZATION_FAIL:
-      return { ...state, error: action.error };
+      return { ...state, error: action.error, loading: false };
     case actionTypes.LOGOUT:
       return { ...state, userId: null };
     default:
