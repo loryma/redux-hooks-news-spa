@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-const authorized = true;
+import { connect } from "react-redux";
 
-export default function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({ children, authorized, ...rest }) {
   return (
     <Route
       {...rest}
@@ -12,3 +12,7 @@ export default function PrivateRoute({ children, ...rest }) {
     />
   );
 }
+
+const mapStateToProps = state => ({ authorized: !!state.auth.userId });
+
+export default connect(mapStateToProps)(PrivateRoute);
