@@ -6,6 +6,7 @@ import thunk from "redux-thunk";
 
 import authReducer from "./store/reducers/authReducer";
 import profileReducer from "./store/reducers/profileReducer";
+import newsReducer from "./store/reducers/newsReducer";
 import News from "./containers/News";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
@@ -18,7 +19,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  profile: profileReducer
+  profile: profileReducer,
+  news: newsReducer
 });
 
 const store = createStore(

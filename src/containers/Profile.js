@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import withError from "../hoc/withError";
 import * as actions from "../store/actions";
 import Icon from "../components/Icon";
 
@@ -61,4 +62,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Profile);
+)(withError(Profile));

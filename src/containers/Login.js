@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import withError from "../hoc/withError";
 import * as actions from "../store/actions";
 
 import classes from "./Login.module.css";
@@ -64,9 +65,9 @@ const Login = ({ authorize, loggedIn, loading, error, clearPassword }) => {
         </button>
       </form>
       {loggedIn && <Redirect to="/profile" />}
-      {error && error.message && (
+      {/* {error && error.message && (
         <div className={classes.Error}>{error.message}</div>
-      )}
+      )} */}
     </div>
   );
 };
@@ -86,4 +87,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Login);
+)(withError(Login));
