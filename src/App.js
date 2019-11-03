@@ -36,7 +36,7 @@ function App() {
       <div className="App">
         <BrowserRouter>
           <Header />
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={""}>
             <Switch>
               <Route path="/news">
                 <LazyNews />

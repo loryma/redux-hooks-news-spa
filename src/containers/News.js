@@ -4,6 +4,7 @@ import * as actions from "../store/actions";
 import { connect } from "react-redux";
 import withError from "../hoc/withError";
 import classes from "./News.module.css";
+import Spinner from "../components/Spinner/Spinner";
 
 function News({ articles, loading, error, fetchNews }) {
   let newsContent = null;
@@ -21,7 +22,7 @@ function News({ articles, loading, error, fetchNews }) {
   }, [articles]);
 
   if (loading) {
-    newsContent = <p>Loading...</p>;
+    newsContent = <Spinner />;
   } else if (articles && articles.length > 0 && !error) {
     const news = articles.map(artObj => {
       return <Article key={artObj.id} {...artObj} />;
