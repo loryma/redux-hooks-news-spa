@@ -50,6 +50,9 @@ function App() {
               <Route path="/">
                 <Home />
               </Route>
+              <Route>
+                <Home />
+              </Route>
             </Switch>
           </Suspense>
         </BrowserRouter>
