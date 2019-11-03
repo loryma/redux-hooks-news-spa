@@ -8,7 +8,7 @@ State in the application is preserved using state container with `redux` npm pac
 
 Async actions, such as checking user login details, fetching user profile data and news is done with `redux-thunk`
 
-Navigation with `react-dom-router`
+Navigation with `react-router-dom`
 
 News and Profile page are lazy loaded with React's lazy and Suspence
 `axios` is used for network requests
