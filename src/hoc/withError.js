@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../components/Modal/Modal";
+import formatError from "../utilities/formatError";
 
 const withError = WrappedComponent => {
   return function(props) {
@@ -16,7 +17,7 @@ const withError = WrappedComponent => {
     return (
       <>
         <Modal show={error} close={errorConfirmedHandler}>
-          {props.error ? props.error.message : null}
+          {props.error ? formatError(props.error.message) : null}
         </Modal>
         <WrappedComponent {...props} />
       </>
