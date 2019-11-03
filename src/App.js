@@ -12,7 +12,7 @@ import Home from "./containers/Home";
 import Login from "./containers/Login";
 import Profile from "./containers/Profile";
 import PrivateRoute from "./containers/PrivateRoute";
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import "./App.css";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

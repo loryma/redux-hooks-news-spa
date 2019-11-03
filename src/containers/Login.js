@@ -6,68 +6,152 @@ import * as actions from "../store/actions";
 
 import classes from "./Login.module.css";
 const Login = ({ authorize, loggedIn, loading, error, clearPassword }) => {
-  // let [fields, setFields] = useState({
-  //   email: {
-  //     value: "",
-  //     shouldValidate: true,
-  //     touched: false,
-  //     config: {
-  //       placeholder: "Your email",
-  //       type: "email"
-  //     }
-  //   },
-  //   password: {
-  //     value: "",
-  //     shouldValidate: true,
-  //     touched: false,
-  //     config: {
-  //       type: "password"
-  //     }
-  //   }
-  // });
+  const re = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  let formFields = [];
+  let form = null;
 
-  let [email, setEmail] = useState("");
-  let [password, setPassword] = useState("");
-  let [isValid, setIsValid] = useState(false);
+  let [fields, setFields] = useState({
+    email: {
+      value: "",
+      config: {
+        type: "email",
+        placeholder: "your email"
+      },
+      shouldValidate: true,
+      touched: false,
+      validation: {
+        requered: true,
+        regex: re
+      },
+      error: false
+    },
+    password: {
+      value: "",
+      config: {
+        type: "password"
+      },
+      shouldValidate: true,
+      touched: false,
+      validation: {
+        requered: true,
+        minWidth: 5
+      },
+      error: false
+    }
+  });
 
-  // const inputChange = (e, inputName) => {
-  //   let value = e.target.value;
-  // };
+  let [formValid, setFormValid] = useState(true);
 
   useEffect(() => {
     if (clearPassword) {
-      setPassword("");
+      setFields({
+        ...fields,
+        password: { ...fields["password"], value: "" }
+      });
     }
   }, [clearPassword]);
 
+  useEffect(() => {
+    checkFormValidity();
+  }, [fields]);
+
   const onSubmit = e => {
     e.preventDefault();
-    authorize(email, password);
+
+    for (let key in fields) {
+      inputChangeHandler(key, fields[key].value);
+    }
+
+    if (formValid) {
+      let values = Object.values(fields).map(el => el.value);
+
+      authorize(...values);
+    }
   };
+
+  const checkFormValidity = () => {
+    let newFormValidValue = true;
+    for (let key in fields) {
+      console.log(fields[key].error);
+      newFormValidValue = !fields[key].error && newFormValidValue;
+    }
+    console.log("checkVal", newFormValidValue);
+    setFormValid(newFormValidValue);
+  };
+
+  const validate = (value, validationSchema) => {
+    let errors = [];
+    for (let key in validationSchema) {
+      if (key === "requered" && !value.trim()) {
+        errors.push("This field is requered");
+      } else if (key === "regex" && !validationSchema[key].test(value)) {
+        errors.push("Doesn't look like an email");
+      } else if (key === "minWidth") {
+        if (value.length < validationSchema[key]) {
+          errors.push(
+            `The value should be at least ${validationSchema[key]} characters long`
+          );
+        }
+      }
+    }
+
+    if (errors.length > 0) {
+      return errors;
+    }
+    return false;
+  };
+
+  const inputChangeHandler = (name, value) => {
+    const error = fields[name].shouldValidate
+      ? validate(value, fields[name].validation)
+      : false;
+    const newFields = {
+      ...fields,
+      [name]: { ...fields[name], value, error, touched: true }
+    };
+    setFields(newFields);
+    // check if form is valid
+    // if (fields[name].shouldValidate) {
+    //   let newFormValidValue = true;
+    //   for (let key in fields) {
+    //     console.log(fields[key].error);
+    //     newFormValidValue = !fields[key].error && newFormValidValue;
+    //   }
+    //   console.log("checkVal", newFormValidValue);
+    //   setFormValid(newFormValidValue);
+    // }
+  };
+
+  for (let key in fields) {
+    formFields.push({
+      key,
+      value: fields[key].value,
+      error: fields[key].error,
+      ...fields[key].config
+    });
+  }
+
+  form = formFields.map(({ key, error, ...rest }) => (
+    <div className={classes.InputField}>
+      <input
+        className={classes.Input}
+        key={key}
+        {...rest}
+        onChange={e => inputChangeHandler(key, e.target.value)}
+      />
+      {error ? <p className={classes.Error}>{error[0]}</p> : null}
+    </div>
+  ));
 
   return (
     <div>
       <form onSubmit={onSubmit}>
-        <input
-          name="email"
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <input
-          name="password"
-          type="password"
-          value={password}
-          onChange={e => setPassword(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>
-          Login
+        {form}
+        <button type="submit" disabled={loading || !formValid}>
+          {loading ? "Fetching..." : "Login"}
         </button>
       </form>
       {loggedIn && <Redirect to="/profile" />}
-      {/* {error && error.message && (
-        <div className={classes.Error}>{error.message}</div>
-      )} */}
     </div>
   );
 };

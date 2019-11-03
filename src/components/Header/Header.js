@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import * as actions from "../store/actions";
+import * as actions from "../../store/actions";
 import { connect } from "react-redux";
 import classes from "./Header.module.css";
 
