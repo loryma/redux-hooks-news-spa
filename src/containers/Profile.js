@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import withError from "../hoc/withError";
 import * as actions from "../store/actions";
 import Icon from "../components/Icon/Icon";
+import Spinner from "../components/Spinner/Spinner";
 
 const Profile = ({ userId, profileData, loading, fetchProfile, error }) => {
   let profileContent;
@@ -14,7 +15,7 @@ const Profile = ({ userId, profileData, loading, fetchProfile, error }) => {
   }, [userId, fetchProfile]);
 
   if (loading) {
-    profileContent = <div>Loading...</div>;
+    profileContent = <Spinner />;
   } else if (profileData) {
     let { city, languages, social } = profileData;
     profileContent = (
