@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import withError from "../hoc/withError";
 import * as actions from "../store/actions";
-import Icon from "../components/Icon";
+import Icon from "../components/Icon/Icon";
 
 const Profile = ({ userId, profileData, loading, fetchProfile, error }) => {
   let profileContent;

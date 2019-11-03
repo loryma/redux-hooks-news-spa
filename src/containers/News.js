@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import Article from "../components/Article";
+import Article from "../components/Article/Article";
 import * as actions from "../store/actions";
 import { connect } from "react-redux";
 import withError from "../hoc/withError";

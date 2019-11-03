@@ -110,16 +110,6 @@ const Login = ({ authorize, loggedIn, loading, error, clearPassword }) => {
       [name]: { ...fields[name], value, error, touched: true }
     };
     setFields(newFields);
-    // check if form is valid
-    // if (fields[name].shouldValidate) {
-    //   let newFormValidValue = true;
-    //   for (let key in fields) {
-    //     console.log(fields[key].error);
-    //     newFormValidValue = !fields[key].error && newFormValidValue;
-    //   }
-    //   console.log("checkVal", newFormValidValue);
-    //   setFormValid(newFormValidValue);
-    // }
   };
 
   for (let key in fields) {
