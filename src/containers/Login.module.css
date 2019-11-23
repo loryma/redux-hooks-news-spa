@@ -1,0 +1,18 @@
+.Input {
+  display: block;
+}
+
+.InputField {
+  position: relative;
+  padding-bottom: 1.5em;
+}
+
+.Error {
+  color: red;
+  padding: 0;
+  margin: 0;
+  font-size: 0.6em;
+  position: absolute;
+  bottom: 0.6em;
+  left: 0;
+}

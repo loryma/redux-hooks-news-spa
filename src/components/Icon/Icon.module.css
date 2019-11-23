@@ -1,0 +1,33 @@
+.Icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-right: 2em;
+}
+
+.twitter {
+  background-image: url(./twitter.svg);
+}
+
+.vk {
+  background-image: url(./vk.svg);
+}
+
+.telegram {
+  background-image: url(./telegram.svg);
+}
+
+.twitch {
+  background-image: url(./twitch.svg);
+}
+
+.web {
+  background-image: url(./web.svg);
+}
+
+.youtube {
+  background-image: url(./youtube.svg);
+}
