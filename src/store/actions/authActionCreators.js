@@ -3,9 +3,12 @@ import axios from "axios";
 
 export const authStart = () => ({ type: actionTypes.AUTHORIZATION_START });
 
-export const authSuccess = userId => ({
+export const authSuccess = ({ idToken, localId, email, expiresIn }) => ({
   type: actionTypes.AUTHORIZATION_SUCCESS,
-  userId
+  idToken,
+  expiresIn,
+  email,
+  localId
 });
 export const authFail = error => ({
   type: actionTypes.AUTHORIZATION_FAIL,
@@ -17,18 +20,33 @@ export const logout = () => ({ type: actionTypes.LOGOUT });
 export const authorize = (email, password) => {
   return dispatch => {
     dispatch(authStart());
+    const formData = { email, password, returnSecureToken: true };
     axios
-      .post("https://mysterious-reef-29460.herokuapp.com/api/v1/validate", {
-        email,
-        password
-      })
+      .post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCN9xjxG_Rqwwg9nN97i38XSW9CAImL-tg",
+        formData
+      )
       .then(res => {
-        if (res.data.status === "ok") {
-          dispatch(authSuccess(res.data.data.id));
-        } else if (res.data.status === "err") {
-          dispatch(authFail(res.data));
-        }
+        dispatch(authSuccess(res.data));
       })
       .catch(error => dispatch(authFail(error)));
+  };
+};
+
+export const signup = (email, password) => {
+  return dispatch => {
+    dispatch(authStart());
+    const formData = { email, password, returnSecureToken: true };
+    return axios
+      .post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCN9xjxG_Rqwwg9nN97i38XSW9CAImL-tg",
+        formData
+      )
+      .then(res => {
+        dispatch(authSuccess(res.data));
+      })
+      .catch(error => {
+        dispatch(authFail(error));
+      });
   };
 };

@@ -5,12 +5,11 @@ import * as actions from "../store/actions";
 const mapStateToProps = state => ({
   loading: state.auth.loading,
   loggedIn: state.auth.userId,
-  error: state.auth.error,
-  clearPassword: state.auth.error && state.auth.error.message === "wrong_email_or_password"
+  error: state.auth.error
 });
 
 const mapDispatchToProps = dispatch => ({
-  submit: (email, password) => dispatch(actions.authorize(email, password))
+  submit: (email, password) => dispatch(actions.signup(email, password))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

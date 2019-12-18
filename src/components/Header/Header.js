@@ -12,31 +12,23 @@ const Header = ({ loggedIn, logout }) => {
     <nav>
       <ul className={classes.Header}>
         <li className={classes.NavItem}>
-          <NavLink
-            exact
-            activeStyle={activeStyle}
-            className={classes.NavLink}
-            to="/"
-          >
+          <NavLink exact activeStyle={activeStyle} className={classes.NavLink} to="/">
             Home
           </NavLink>
         </li>
         <li className={classes.NavItem}>
-          <NavLink
-            activeStyle={activeStyle}
-            className={classes.NavLink}
-            to="/news"
-          >
+          <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/news">
             News
           </NavLink>
         </li>
         <li className={classes.NavItem}>
-          <NavLink
-            activeStyle={activeStyle}
-            className={classes.NavLink}
-            to="/Profile"
-          >
+          <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/profile">
             Profile
+          </NavLink>
+        </li>
+        <li className={classes.NavItem}>
+          <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/signup">
+            Signup
           </NavLink>
         </li>
         <li className={classes.NavItem}>
@@ -45,11 +37,7 @@ const Header = ({ loggedIn, logout }) => {
               Logout
             </button>
           ) : (
-            <NavLink
-              activeStyle={activeStyle}
-              className={classes.NavLink}
-              to="Login"
-            >
+            <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/login">
               Login
             </NavLink>
           )}
@@ -64,7 +52,4 @@ const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(actions.logout())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

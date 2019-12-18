@@ -1,6 +1,7 @@
 const ERRORS = {
-  wrong_email_or_password: "Wrong email or password",
-  user_not_found: "User not found"
+  EMAIL_EXISTS: "The email address is already in use by another account",
+  TOO_MANY_ATTEMPTS_TRY_LATER:
+    "All requests from this device have been blocked due to unusual activity. Try again later."
 };
 
 export default function formatError(message) {

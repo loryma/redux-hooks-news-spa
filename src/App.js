@@ -9,6 +9,7 @@ import profileReducer from "./store/reducers/profileReducer";
 import newsReducer from "./store/reducers/newsReducer";
 import Home from "./containers/Home";
 import Login from "./containers/Login";
+import Signup from "./containers/Signup";
 import PrivateRoute from "./containers/PrivateRoute";
 import Header from "./components/Header/Header";
 import Spinner from "./components/Spinner/Spinner";
@@ -25,10 +26,7 @@ const rootReducer = combineReducers({
   news: newsReducer
 });
 
-const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(thunk))
-);
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 function App() {
   return (
@@ -43,6 +41,9 @@ function App() {
               </Route>
               <Route path="/login">
                 <Login />
+              </Route>
+              <Route path="/signup">
+                <Signup />
               </Route>
               <PrivateRoute path="/profile">
                 <LazyProfile />
