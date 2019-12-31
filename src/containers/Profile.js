@@ -33,14 +33,17 @@ const Profile = ({ idToken, profileData, loading, fetchProfile, error }) => {
     profileContent = <Spinner />;
   } else if (profileData) {
     const date = new Date(+profileData.createdAt);
-    const month = MONTHS[date.getMonth() + 1];
+    const month = MONTHS[date.getMonth()];
     const createdAt = `${month} ${date.getDate()}, ${date.getFullYear()}`;
     profileContent = (
       <div>
-        <p>Email: </p>
-        <span>{profileData.email}</span>
-        <p>Accout created on:</p>
-        <span>{createdAt}</span>
+        <p>
+          Email: <span>{profileData.email}</span>
+        </p>
+
+        <p>
+          Accout created on: <span>{createdAt}</span>
+        </p>
       </div>
     );
   }

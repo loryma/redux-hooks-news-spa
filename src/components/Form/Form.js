@@ -72,10 +72,9 @@ const Form = ({ submit, loggedIn, loading, error, clearPassword }) => {
   const checkFormValidity = () => {
     let newFormValidValue = true;
     for (let key in fields) {
-      console.log(fields[key].error);
       newFormValidValue = !fields[key].error && newFormValidValue;
     }
-    console.log("checkVal", newFormValidValue);
+
     setFormValid(newFormValidValue);
   };
 

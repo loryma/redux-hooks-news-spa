@@ -25,7 +25,7 @@ export const fetchProfile = idToken => {
         query
       )
       .then(res => {
-        const userData = res.users[0];
+        const userData = { email: res.data.users[0].email, createdAt: res.data.users[0].createdAt };
         dispatch(fetchProfileSuccess(userData));
       })
       .catch(error => {

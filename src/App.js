@@ -14,9 +14,11 @@ import "./App.css";
 const LazyNews = lazy(() => import("./containers/News"));
 const LazyProfile = lazy(() => import("./containers/Profile"));
 
-function App({ tryAutoSignup }) {
+function App({ tryAutoSignup, userId }) {
   useEffect(() => {
-    tryAutoSignup();
+    if (!userId) {
+      tryAutoSignup();
+    }
   }, []);
   return (
     <div className="App">
@@ -33,9 +35,9 @@ function App({ tryAutoSignup }) {
             <Route path="/signup">
               <Signup />
             </Route>
-            <PrivateRoute path="/profile">
+            <Route path="/profile">
               <LazyProfile />
-            </PrivateRoute>
+            </Route>
             <Route path="/">
               <Home />
             </Route>
@@ -49,6 +51,8 @@ function App({ tryAutoSignup }) {
   );
 }
 
+const mapStateToProps = state => ({ userId: state.auth.userId });
+
 const mapDispatchToProps = dispatch => ({ tryAutoSignup: () => dispatch(actions.authCheckState()) });
 
-export default connect(undefined, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

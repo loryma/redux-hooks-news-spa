@@ -6,7 +6,7 @@ const mapStateToProps = state => ({
   loading: state.auth.loading,
   loggedIn: state.auth.userId,
   error: state.auth.error,
-  clearPassword: state.auth.error && state.auth.error.message === "wrong_email_or_password"
+  clearPassword: state.auth.error && state.auth.error.message === "INVALID_PASSWORD"
 });
 
 const mapDispatchToProps = dispatch => ({
