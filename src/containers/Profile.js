@@ -5,19 +5,44 @@ import * as actions from "../store/actions";
 import Icon from "../components/Icon/Icon";
 import Spinner from "../components/Spinner/Spinner";
 
-const Profile = ({ userId, profileData, loading, fetchProfile, error }) => {
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+
+const Profile = ({ idToken, profileData, loading, fetchProfile, error }) => {
   let profileContent;
 
   useEffect(() => {
-    if (userId) {
-      fetchProfile(userId);
+    if (idToken) {
+      fetchProfile(idToken);
     }
-  }, [userId, fetchProfile]);
+  }, [idToken, fetchProfile]);
 
   if (loading) {
     profileContent = <Spinner />;
   } else if (profileData) {
-    profileContent = <div></div>;
+    const date = new Date(+profileData.createdAt);
+    const month = MONTHS[date.getMonth() + 1];
+    const createdAt = `${month} ${date.getDate()}, ${date.getFullYear()}`;
+    profileContent = (
+      <div>
+        <p>Email: </p>
+        <span>{profileData.email}</span>
+        <p>Accout created on:</p>
+        <span>{createdAt}</span>
+      </div>
+    );
   }
 
   return <div>{profileContent}</div>;
@@ -27,11 +52,11 @@ const mapStateToProps = state => ({
   profileData: state.profile.data,
   loading: state.profile.loading,
   error: state.profile.error,
-  userId: state.auth.userId
+  idToken: state.auth.idToken
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchProfile: userId => dispatch(actions.fetchProfile(userId))
+  fetchProfile: idToken => dispatch(actions.fetchProfile(idToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withError(Profile));

@@ -3,10 +3,9 @@ import axios from "axios";
 
 export const authStart = () => ({ type: actionTypes.AUTHORIZATION_START });
 
-export const authSuccess = ({ idToken, localId, email, expiresIn }) => ({
+export const authSuccess = ({ idToken, localId }) => ({
   type: actionTypes.AUTHORIZATION_SUCCESS,
   idToken,
-  email,
   localId
 });
 export const authFail = error => ({
@@ -14,14 +13,26 @@ export const authFail = error => ({
   error
 });
 
-export const logout = () => ({ type: actionTypes.LOGOUT });
+export const logout = () => {
+  localStorage.removeItem("idToken");
+  localStorage.removeItem("expirationDate");
+  localStorage.removeItem("localId");
+  return { type: actionTypes.LOGOUT };
+};
 
 export const checkAuthTimout = expirationTime => {
   return dispatch => {
     setTimeout(() => {
       dispatch(logout());
-    }, expirationTime * 1000);
+    }, expirationTime);
   };
+};
+
+const serializeState = ({ idToken, expiresIn, localId }) => {
+  const expirationdDate = Date.now() + expiresIn * 1000;
+  localStorage.setItem("idToken", idToken);
+  localStorage.setItem("expirationDate", +expirationdDate);
+  localStorage.setItem("localId", localId);
 };
 
 export const authorize = (email, password) => {
@@ -34,6 +45,7 @@ export const authorize = (email, password) => {
         formData
       )
       .then(res => {
+        serializeState(res.data);
         dispatch(authSuccess(res.data));
 
         dispatch(checkAuthTimout(res.data.expiresIn));
@@ -52,12 +64,35 @@ export const signup = (email, password) => {
         formData
       )
       .then(res => {
+        serializeState(res.data);
         dispatch(authSuccess(res.data));
 
-        dispatch(checkAuthTimout(res.data.expiresIn));
+        dispatch(checkAuthTimout(res.data.expiresIn * 1000));
       })
       .catch(error => {
         dispatch(authFail(error.response.data.error));
       });
+  };
+};
+
+export const authCheckState = () => {
+  return dispatch => {
+    try {
+      const idToken = localStorage.getItem("idToken");
+      if (idToken) {
+        const expirationDate = +localStorage.getItem("expirationDate");
+        const localId = localStorage.getItem("localId");
+
+        if (expirationDate > Date.now()) {
+          dispatch(authSuccess({ idToken, localId }));
+
+          const expiresIn = expirationDate - Date.now();
+
+          dispatch(checkAuthTimout(expiresIn));
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 };

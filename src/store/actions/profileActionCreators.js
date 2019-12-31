@@ -15,17 +15,18 @@ export const fetchProfileFail = error => ({
   error
 });
 
-export const fetchProfile = id => {
+export const fetchProfile = idToken => {
   return dispatch => {
     dispatch(fetchProfileStart());
+    const query = { idToken };
     axios
-      .get("https://mysterious-reef-29460.herokuapp.com/api/v1/user-info/" + id)
+      .post(
+        "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyCN9xjxG_Rqwwg9nN97i38XSW9CAImL-tg",
+        query
+      )
       .then(res => {
-        if (res.data.status === "ok") {
-          dispatch(fetchProfileSuccess(res.data.data));
-        } else if (res.data.status === "err") {
-          dispatch(fetchProfileFail(res.data));
-        }
+        const userData = res.users[0];
+        dispatch(fetchProfileSuccess(userData));
       })
       .catch(error => {
         dispatch(fetchProfileFail(error => dispatch(fetchProfileFail(error))));
