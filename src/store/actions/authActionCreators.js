@@ -6,7 +6,6 @@ export const authStart = () => ({ type: actionTypes.AUTHORIZATION_START });
 export const authSuccess = ({ idToken, localId, email, expiresIn }) => ({
   type: actionTypes.AUTHORIZATION_SUCCESS,
   idToken,
-  expiresIn,
   email,
   localId
 });
@@ -16,6 +15,14 @@ export const authFail = error => ({
 });
 
 export const logout = () => ({ type: actionTypes.LOGOUT });
+
+export const checkAuthTimout = expirationTime => {
+  return dispatch => {
+    setTimeout(() => {
+      dispatch(logout());
+    }, expirationTime * 1000);
+  };
+};
 
 export const authorize = (email, password) => {
   return dispatch => {
@@ -28,6 +35,8 @@ export const authorize = (email, password) => {
       )
       .then(res => {
         dispatch(authSuccess(res.data));
+
+        dispatch(checkAuthTimout(res.data.expiresIn));
       })
       .catch(error => dispatch(authFail(error)));
   };
@@ -44,9 +53,11 @@ export const signup = (email, password) => {
       )
       .then(res => {
         dispatch(authSuccess(res.data));
+
+        dispatch(checkAuthTimout(res.data.expiresIn));
       })
       .catch(error => {
-        dispatch(authFail(error));
+        dispatch(authFail(error.response.data.error));
       });
   };
 };

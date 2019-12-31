@@ -17,7 +17,7 @@ const withError = WrappedComponent => {
     return (
       <>
         <Modal show={error} close={errorConfirmedHandler}>
-          {props.error ? formatError(props.error.response.data.error.message) : null}
+          {props.error ? formatError(props.error.message) : null}
         </Modal>
         <WrappedComponent {...props} />
       </>

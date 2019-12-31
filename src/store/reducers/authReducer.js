@@ -4,7 +4,6 @@ const initialState = {
   loading: false,
   userId: null,
   idToken: null,
-  expiresIn: null,
   email: null,
   error: null
 };
@@ -19,14 +18,13 @@ const authReducer = (state = initialState, action) => {
         userId: action.localId,
         idToken: action.idToken,
         email: action.email,
-        expiresIn: action.expiresIn,
         loading: false,
         error: null
       };
     case actionTypes.AUTHORIZATION_FAIL:
       return { ...state, error: action.error, loading: false };
     case actionTypes.LOGOUT:
-      return { ...state, userId: null, idToken: null };
+      return { ...state, userId: null, idToken: null, email: null };
     default:
       return state;
   }
