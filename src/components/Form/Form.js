@@ -124,7 +124,7 @@ const Form = ({ submit, loggedIn, loading, error, clearPassword }) => {
   ));
 
   return (
-    <div>
+    <div className="form container">
       <form onSubmit={onSubmit}>
         {form}
         <button type="submit" disabled={loading || !formValid}>

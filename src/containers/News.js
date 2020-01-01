@@ -38,10 +38,10 @@ function News({ articles, loading, error, fetchNews }) {
     );
   }
   return (
-    <>
+    <div className="container">
       <h2>News</h2>
       {newsContent}
-    </>
+    </div>
   );
 }
 
@@ -55,7 +55,4 @@ const mapDispatchToProps = dispatch => ({
   fetchNews: () => dispatch(actions.fetchNews())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withError(News));
+export default connect(mapStateToProps, mapDispatchToProps)(withError(News));

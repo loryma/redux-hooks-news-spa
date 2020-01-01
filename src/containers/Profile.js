@@ -36,7 +36,7 @@ const Profile = ({ idToken, profileData, loading, fetchProfile, error }) => {
     const month = MONTHS[date.getMonth()];
     const createdAt = `${month} ${date.getDate()}, ${date.getFullYear()}`;
     profileContent = (
-      <div>
+      <div className="container">
         <p>
           Email: <span>{profileData.email}</span>
         </p>

@@ -6,11 +6,12 @@ import classes from "./Header.module.css";
 
 const Header = ({ loggedIn, logout }) => {
   const activeStyle = {
-    borderBottom: "2px solid slateblue"
+    borderBottom: "4px solid #555",
+    backgroundColor: "rgb(185,160,127)"
   };
   return (
-    <nav>
-      <ul className={classes.Header}>
+    <nav className={classes.Header}>
+      <ul className={`${classes.content} container`}>
         <li className={classes.NavItem}>
           <NavLink exact activeStyle={activeStyle} className={classes.NavLink} to="/">
             Home
@@ -21,27 +22,34 @@ const Header = ({ loggedIn, logout }) => {
             News
           </NavLink>
         </li>
-        <li className={classes.NavItem}>
-          <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/profile">
-            Profile
-          </NavLink>
-        </li>
-        <li className={classes.NavItem}>
-          <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/signup">
-            Signup
-          </NavLink>
-        </li>
-        <li className={classes.NavItem}>
-          {loggedIn ? (
+        {loggedIn ? (
+          <li className={classes.NavItem}>
+            <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/profile">
+              Profile
+            </NavLink>
+          </li>
+        ) : null}
+
+        {loggedIn ? (
+          <li className={classes.NavItem}>
             <button className={classes.NavLink} onClick={e => logout()}>
               Logout
             </button>
-          ) : (
-            <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/login">
-              Login
-            </NavLink>
-          )}
-        </li>
+          </li>
+        ) : (
+          <>
+            <li className={classes.NavItem}>
+              <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/login">
+                Login
+              </NavLink>
+            </li>
+            <li className={classes.NavItem}>
+              <NavLink activeStyle={activeStyle} className={classes.NavLink} to="/signup">
+                Signup
+              </NavLink>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );
