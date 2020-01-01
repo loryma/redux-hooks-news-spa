@@ -1,10 +1,13 @@
 import React from "react";
+import classes from "./Article.module.css";
 
-const Article = ({ title, text }) => {
+const Article = ({ title, url }) => {
   return (
-    <div>
-      <h3>{title}</h3>
-      <p>{text}</p>
+    <div className={classes.article}>
+      <h5 className={classes.title}>{title}</h5>
+      <a href={url} rel="noopener noreferrer" target="_blank" className={classes.url}>
+        {url}
+      </a>
     </div>
   );
 };

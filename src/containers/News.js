@@ -6,53 +6,53 @@ import withError from "../hoc/withError";
 import classes from "./News.module.css";
 import Spinner from "../components/Spinner/Spinner";
 
-function News({ articles, loading, error, fetchNews }) {
+function News({ posts, loading, error, fetchNews }) {
   let newsContent = null;
 
   useEffect(() => {
     fetchNews();
   }, [fetchNews]);
 
-  const articlesCount = useMemo(() => {
-    if (articles) {
-      return articles.length;
+  const postsCount = useMemo(() => {
+    if (posts) {
+      return posts.length;
     } else {
       return 0;
     }
-  }, [articles]);
+  }, [posts]);
 
   if (loading) {
     newsContent = <Spinner />;
-  } else if (articles && articles.length > 0 && !error) {
-    const news = articles.map(artObj => {
-      return <Article key={artObj.id} {...artObj} />;
+  } else if (posts && posts.length > 0 && !error) {
+    const news = posts.map((post, i) => {
+      return <Article key={i} {...post} />;
     });
 
     newsContent = (
       <>
         {news}
         <div>
-          Articles: <span className={classes.Count}>{articlesCount}</span>
+          <span className={classes.Count}>{postsCount}</span>
         </div>
       </>
     );
   }
   return (
     <div className="container">
-      <h2>News</h2>
+      <h2 className={classes.header}>News</h2>
       {newsContent}
     </div>
   );
 }
 
 const mapStateToProps = state => ({
-  articles: state.news.data,
+  posts: state.news.data,
   loading: state.news.loading,
   error: state.news.error
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchNews: () => dispatch(actions.fetchNews())
+  fetchNews: () => dispatch(actions.fetchSubreddit("science"))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withError(News));

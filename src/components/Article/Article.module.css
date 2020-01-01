@@ -1,0 +1,18 @@
+.article {
+  padding: 0.5rem;
+  background-color: rgb(76, 72, 104);
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+}
+
+.title {
+  color: wheat;
+  font-size: 1rem;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+}
+
+.url {
+  color: white;
+  font-style: italic;
+}
