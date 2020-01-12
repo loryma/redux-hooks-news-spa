@@ -1,5 +1,5 @@
 .Header {
-  height: 3em;
+  height: 4em;
   background-color: rgb(150, 116, 65);
   margin-bottom: 1rem;
 }
@@ -10,6 +10,7 @@
   padding: 0;
   margin-left: auto;
   margin-right: auto;
+  height: 100%;
 }
 
 .NavItem {
@@ -22,7 +23,7 @@
   height: 100%;
   text-decoration: none;
   display: block;
-  line-height: 3em;
+  line-height: 4em;
   color: white;
   padding-right: 0.5em;
   padding-left: 0.5em;
@@ -32,4 +33,5 @@
 .Logout {
   -webkit-appearance: none;
   background-color: inherit;
+  border: none;
 }

@@ -6,8 +6,8 @@ import classes from "./Header.module.css";
 
 const Header = ({ loggedIn, logout }) => {
   const activeStyle = {
-    borderBottom: "4px solid #555",
-    backgroundColor: "rgb(185,160,127)"
+    borderBottom: "4px solid #888",
+    backgroundColor: "rgb(76, 72, 104)"
   };
   return (
     <nav className={classes.Header}>
