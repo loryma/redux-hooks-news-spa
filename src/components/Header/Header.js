@@ -32,7 +32,7 @@ const Header = ({ loggedIn, logout }) => {
 
         {loggedIn ? (
           <li className={classes.NavItem}>
-            <button className={classes.NavLink} onClick={e => logout()}>
+            <button className={classes.NavLink + " " + classes.Logout} onClick={e => logout()}>
               Logout
             </button>
           </li>

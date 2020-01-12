@@ -28,3 +28,8 @@
   padding-left: 0.5em;
   text-decoration: none;
 }
+
+.Logout {
+  -webkit-appearance: none;
+  background-color: inherit;
+}

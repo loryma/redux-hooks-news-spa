@@ -40,15 +40,12 @@ export const authorize = (email, password) => {
     dispatch(authStart());
     const formData = { email, password, returnSecureToken: true };
     axios
-      .post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCN9xjxG_Rqwwg9nN97i38XSW9CAImL-tg",
-        formData
-      )
+      .post("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCN9xjxG_Rqwwg9nN97i38XSW9CAImL-tg", formData)
       .then(res => {
         serializeState(res.data);
         dispatch(authSuccess(res.data));
 
-        dispatch(checkAuthTimout(res.data.expiresIn));
+        dispatch(checkAuthTimout(res.data.expiresIn * 1000));
       })
       .catch(error => dispatch(authFail(error)));
   };
@@ -59,10 +56,7 @@ export const signup = (email, password) => {
     dispatch(authStart());
     const formData = { email, password, returnSecureToken: true };
     return axios
-      .post(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCN9xjxG_Rqwwg9nN97i38XSW9CAImL-tg",
-        formData
-      )
+      .post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCN9xjxG_Rqwwg9nN97i38XSW9CAImL-tg", formData)
       .then(res => {
         serializeState(res.data);
         dispatch(authSuccess(res.data));
