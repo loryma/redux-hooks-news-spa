@@ -6,7 +6,7 @@ import withError from "../hoc/withError";
 import classes from "./News.module.css";
 import Spinner from "../components/Spinner/Spinner";
 
-function News({ posts, loading, error, fetchNews }) {
+function News({ posts, loading, error, fetchNews, subreddit }) {
   let newsContent = null;
 
   useEffect(() => {
@@ -39,7 +39,11 @@ function News({ posts, loading, error, fetchNews }) {
   }
   return (
     <div className="container">
-      <h2 className={classes.header}>News</h2>
+      <div className={classes.headerRow}>
+        <h2 className={classes.header}>News</h2>
+        <h4 className={classes.subreddit}>subreddit: {subreddit}</h4>
+      </div>
+
       {newsContent}
     </div>
   );
@@ -48,7 +52,8 @@ function News({ posts, loading, error, fetchNews }) {
 const mapStateToProps = state => ({
   posts: state.news.data,
   loading: state.news.loading,
-  error: state.news.error
+  error: state.news.error,
+  subreddit: state.news.subreddit
 });
 
 const mapDispatchToProps = dispatch => ({

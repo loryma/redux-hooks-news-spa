@@ -1,7 +1,7 @@
 .Header {
   height: 4em;
-  background-color: rgb(150, 116, 65);
-  margin-bottom: 1rem;
+  background-color: black;
+  margin-bottom: 2rem;
 }
 
 .content {
@@ -16,7 +16,6 @@
 .NavItem {
   display: block;
   height: 100%;
-  background-color: rgb(150, 116, 65);
 }
 
 .NavLink {
